@@ -26,7 +26,10 @@ displayAlert = (text, action) => { // action corresponding to css class
 }
 
 setBackToDefault = () => {
-  console.log("set back to default");
+  todoItemInput.value = "";
+  editFlag = false;
+  editId = "";
+  submitBtn.textContent = "submit";
 }
 
 // ****** LOCAL STORAGE **********
