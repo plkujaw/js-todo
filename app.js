@@ -17,9 +17,9 @@ addItem = (event) => {
   event.preventDefault();
   const todoItem = todoItemInput.value;
   const id = new Date().getTime().toString(); // getting unique ids
-  if (todoItem !== "" && editFlag === false) {
+  if (todoItem && !editFlag) { // !editFlag => editFlag is false
     console.log("add item");
-  } else if (todoItem !== "" && editFlag === true) {
+  } else if (todoItem && editFlag) { // editFlag => editFlag is true
     console.log("editing");
   } else {
     console.log("empty value");
