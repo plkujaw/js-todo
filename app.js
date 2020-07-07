@@ -8,12 +8,27 @@ const todoList = document.querySelector(".todo-list");
 const clearBtn = document.querySelector(".clear-btn");
 // edit option
 let editItem;
-let editFlag = false;
+let editFlag = false; // by default we are not editing
 let editId = "";
 
-// ****** EVENT LISTENERS **********
-
 // ****** FUNCTIONS **********
+// define functions with fat arrow BEFORE using them
+addItem = (event) => {
+  event.preventDefault();
+  const todoItem = todoItemInput.value;
+  const id = new Date().getTime().toString(); // getting unique ids
+  if (todoItem !== "" && editFlag === false) {
+    console.log("add item");
+  } else if (todoItem !== "" && editFlag === true) {
+    console.log("editing");
+  } else {
+    console.log("empty value");
+  }
+};
+
+// ****** EVENT LISTENERS **********
+// submit form
+todoInputForm.addEventListener("submit", addItem);
 
 // ****** LOCAL STORAGE **********
 
