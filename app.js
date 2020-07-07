@@ -13,6 +13,22 @@ let editId = "";
 
 // ****** FUNCTIONS **********
 // define functions with fat arrow BEFORE using them
+
+// display appropriate alert
+displayAlert = (text, action) => { // action corresponding to css class
+  alert.textContent = `${text}`;
+  alert.classList.add(`alert-${action}`);
+  // remove alert
+  setTimeout(function() {
+    alert.textContent = "";
+    alert.classList.remove(`alert-${action}`);
+  }, 2000);
+}
+
+
+
+
+// add item to the list
 addItem = (event) => {
   event.preventDefault();
   const todoItem = todoItemInput.value;
@@ -22,7 +38,7 @@ addItem = (event) => {
   } else if (todoItem && editFlag) { // editFlag => editFlag is true
     console.log("editing");
   } else {
-    console.log("empty value");
+    displayAlert("please enter value", "danger");
   }
 };
 

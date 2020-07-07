@@ -216,16 +216,19 @@ Grocery List
   border-radius : 0.25rem;
   letter-spacing: var(--spacing);
   text-transform: capitalize;
+  transition    : var(--transition);
 }
 
 .alert-danger {
   color     : #721c24;
   background: #f8d7da;
+  transition: var(--transition);
 }
 
 .alert-success {
   color     : #155724;
   background: #d4edda;
+  transition: var(--transition);
 }
 
 .todo-form h3 {
