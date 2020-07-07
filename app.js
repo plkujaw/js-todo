@@ -27,6 +27,7 @@ displayAlert = (text, action) => { // action corresponding to css class
   }, 2000);
 }
 
+// set back to default
 setBackToDefault = () => {
   todoItemInput.value = "";
   editFlag = false;
@@ -34,6 +35,7 @@ setBackToDefault = () => {
   submitBtn.textContent = "submit";
 }
 
+// clear all items
 clearItems = () => {
   const todoItems = todoList.querySelectorAll(".todo-item");
 
@@ -46,6 +48,16 @@ clearItems = () => {
   displayAlert("list cleared", "danger");
   setBackToDefault();
   // localStorage.removeItem("list");
+}
+
+// delete item
+deleteItem = () => {
+  console.log("item deleted");
+}
+
+// edit item
+editItem = () => {
+  console.log("edit item");
 }
 
 // ****** LOCAL STORAGE FUNCTIONS **********
@@ -75,8 +87,14 @@ addItem = (event) => {
                   <button type="button" class="delete-btn">
                   <i class="fas fa-trash"></i></button>
                 </div>`;
+                
+    const deleteBtn = newTodoItem.querySelector(".delete-btn");
+    const editBtn = newTodoItem.querySelector(".edit-btn");
 
-    // append child
+    deleteBtn.addEventListener("click", deleteItem);
+    editBtn.addEventListener("click", editItem);
+
+    // append child - add new item to the list
     todoList.appendChild(newTodoItem);
 
     // show list
@@ -103,5 +121,10 @@ todoInputForm.addEventListener("submit", addItem);
 
 // clear items
 clearBtn.addEventListener("click", clearItems);
+
+// edit item
+
+// remove item
+
 
 // ****** SETUP ITEMS **********
