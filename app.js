@@ -25,7 +25,14 @@ displayAlert = (text, action) => { // action corresponding to css class
   }, 2000);
 }
 
+setBackToDefault = () => {
+  console.log("set back to default");
+}
 
+// ****** LOCAL STORAGE **********
+addToLocalStorage = (id, item) => {
+  console.log('added to local storage');
+}
 
 
 // add item to the list
@@ -34,7 +41,35 @@ addItem = (event) => {
   const todoItem = todoItemInput.value;
   const id = new Date().getTime().toString(); // getting unique ids
   if (todoItem && !editFlag) { // !editFlag => editFlag is false
-    console.log("add item");
+    const newTodoItem = document.createElement("article");
+    // add class
+    newTodoItem.classList.add("todo-item");
+    // add id
+    const attr = document.createAttribute("data-id");
+    attr.value = id;
+    newTodoItem.setAttributeNode(attr);
+    newTodoItem.innerHTML = `<p class="title">${todoItem}</p>
+                <div class="btn-container">
+                  <button type="button" class="edit-btn">
+                  <i class="fas fa-edit"></i></button>
+                  <button type="button" class="delete-btn">
+                  <i class="fas fa-trash"></i></button>
+                </div>`;
+
+    // append child
+    todoList.appendChild(newTodoItem);
+
+    // show list
+    todoContainer.classList.add("show-container");
+
+    // add to local storage
+    addToLocalStorage(id, todoItem);
+
+    //display alert
+    displayAlert("item added", "success");
+
+    // set back to default
+    setBackToDefault();
   } else if (todoItem && editFlag) { // editFlag => editFlag is true
     console.log("editing");
   } else {
@@ -45,7 +80,5 @@ addItem = (event) => {
 // ****** EVENT LISTENERS **********
 // submit form
 todoInputForm.addEventListener("submit", addItem);
-
-// ****** LOCAL STORAGE **********
 
 // ****** SETUP ITEMS **********
