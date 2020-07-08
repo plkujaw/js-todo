@@ -28,6 +28,7 @@ addToLocalStorage = (id, newItem) => {
   let todoList = getLocalStorage();
   console.log(todoList);
   todoList.push(todoItem);
+  // update local storage
   localStorage.setItem("todoList", JSON.stringify(todoList));
 }
 
@@ -39,11 +40,20 @@ removeFromLocalStorage = (id) => {
       return todoItem;
     }
   });
+  // update local storage
   localStorage.setItem("todoList", JSON.stringify(todoList));
 }
 
 editLocalStorage = (id, editedItem) => {
-
+  let todoList = getLocalStorage();
+  todoList = todoList.map(function(todoItem) {
+    if (todoItem.id === id) {
+      todoItem.todo = editedItem;
+    }
+    return todoItem;
+  });
+  // update local storage
+  localStorage.setItem("todoList", JSON.stringify(todoList));
 }
 
 
@@ -78,7 +88,7 @@ clearItems = () => {
   todoContainer.classList.remove("show-container");
   displayAlert("list cleared", "danger");
   setBackToDefault();
-  // localStorage.removeItem("list");
+  localStorage.removeItem("todoList");
 }
 
 // delete item
