@@ -118,17 +118,9 @@ editItem = (event) => {
   submitBtn.textContent = "edit";
 }
 
-
-
-// ****** APP FUNCTIONALITY **********
-// add item to the list
-addItem = (event) => {
-  event.preventDefault();
-  const todoItem = todoItemInput.value;
-  const id = new Date().getTime().toString(); // getting unique ids
-
-  // add new item
-  if (todoItem && !editFlag) { // !editFlag => editFlag is false
+// create list
+createList = (id, todoItem) => {
+   // !editFlag => editFlag is false
     const newTodoItem = document.createElement("article");
     // add class
     newTodoItem.classList.add("todo-item");
@@ -153,6 +145,33 @@ addItem = (event) => {
 
     // append child - add new item to the list
     todoList.appendChild(newTodoItem);
+
+}
+
+
+// show items
+
+showItems = () => {
+  let todoList = getLocalStorage();
+  if (todoList.length > 0) {
+    todoList.forEach((todoItem) => {
+      createList(todoItem.id, todoItem.todo);
+    });
+  todoContainer.classList.add("show-container");
+  }
+}
+
+
+// ****** APP FUNCTIONALITY **********
+// add item to the list
+addItem = (event) => {
+  event.preventDefault();
+  const todoItem = todoItemInput.value;
+  const id = new Date().getTime().toString(); // getting unique ids
+
+  // add new item / create list
+  if (todoItem && !editFlag) {
+    createList(id, todoItem)
 
     // show list
     todoContainer.classList.add("show-container");
@@ -185,9 +204,5 @@ todoInputForm.addEventListener("submit", addItem);
 // clear items
 clearBtn.addEventListener("click", clearItems);
 
-// edit item
-
-// remove item
-
-
-// ****** SETUP ITEMS **********
+// load items
+window.addEventListener("DOMContentLoaded", showItems);
