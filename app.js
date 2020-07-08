@@ -17,23 +17,35 @@ let editId = "";
 
 
 // ****** LOCAL STORAGE FUNCTIONS **********
+getLocalStorage = () => {
+  return localStorage.getItem("todoList") ? JSON.parse(localStorage.getItem("todoList")) : [];
+}
+
 addToLocalStorage = (id, newItem) => {
-  const todoItem = { id: id, todo: newItem};
+  const todoItem = { id: id, todo: newItem };
 
   // checking if todoList exists in local storage; if yes, get it from local storage, if not, create an empty array
-  let todoList = localStorage.getItem("todoList") ? JSON.parse(localStorage.getItem("todoList")) : [];
+  let todoList = getLocalStorage();
   console.log(todoList);
   todoList.push(todoItem);
   localStorage.setItem("todoList", JSON.stringify(todoList));
 }
 
 removeFromLocalStorage = (id) => {
-
+  let todoList = getLocalStorage();
+  // actually returning the items which have not been deleted (with different id than the one which has been passed as the function argument)
+  todoList = todoList.filter(function(todoItem) {
+    if (todoItem.id !== id) {
+      return todoItem;
+    }
+  });
+  localStorage.setItem("todoList", JSON.stringify(todoList));
 }
 
 editLocalStorage = (id, editedItem) => {
 
 }
+
 
 // display appropriate alert
 displayAlert = (text, action) => { // action corresponding to css class
@@ -79,7 +91,7 @@ deleteItem = (event) => {
   }
   displayAlert("item removed", "danger");
   setBackToDefault();
-  // removeFromLocalStorage(id);
+  removeFromLocalStorage(id);
 }
 
 // edit item
