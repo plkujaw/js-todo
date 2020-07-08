@@ -17,11 +17,15 @@ let editId = "";
 
 
 // ****** LOCAL STORAGE FUNCTIONS **********
-addToLocalStorage = (id, item) => {
+addToLocalStorage = (id, newItem) => {
   console.log('added to local storage');
 }
 
 removeFromLocalStorage = (id) => {
+
+}
+
+editLocalStorage = (id, editedItem) => {
 
 }
 
@@ -73,8 +77,17 @@ deleteItem = (event) => {
 }
 
 // edit item
-editItem = () => {
-  console.log("edit item");
+editItem = (event) => {
+  const item = event.currentTarget.parentElement.parentElement;
+
+  // set item to edit - looking for a <p class="title"> element
+  editItem = event.currentTarget.parentElement.previousElementSibling;
+
+  // set form value to the same value as editing item's title
+  todoItemInput.value = editItem.innerHTML;
+  editFlag = true;
+  editId = item.dataset.id;
+  submitBtn.textContent = "edit";
 }
 
 
@@ -85,6 +98,8 @@ addItem = (event) => {
   event.preventDefault();
   const todoItem = todoItemInput.value;
   const id = new Date().getTime().toString(); // getting unique ids
+
+  // add new item
   if (todoItem && !editFlag) { // !editFlag => editFlag is false
     const newTodoItem = document.createElement("article");
     // add class
@@ -101,6 +116,7 @@ addItem = (event) => {
                   <i class="fas fa-trash"></i></button>
                 </div>`;
 
+    // targeting delete/edit buttons after they have been created with the item
     const deleteBtn = newTodoItem.querySelector(".delete-btn");
     const editBtn = newTodoItem.querySelector(".edit-btn");
 
@@ -122,7 +138,12 @@ addItem = (event) => {
     // set back to default
     setBackToDefault();
   } else if (todoItem && editFlag) { // editFlag => editFlag is true
-    console.log("editing");
+    // edit item
+    editItem.innerHTML = todoItem;
+    displayAlert("value changed", "success");
+    // edit local storage
+    editLocalStorage(editId, todoItem);
+    setBackToDefault();
   } else {
     displayAlert("please enter value", "danger");
   }
