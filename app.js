@@ -12,9 +12,18 @@ let editItem;
 let editFlag = false; // by default we are not editing
 let editId = "";
 
-
 // ****** FUNCTIONS **********
 // define functions with fat arrow BEFORE using them
+
+
+// ****** LOCAL STORAGE FUNCTIONS **********
+addToLocalStorage = (id, item) => {
+  console.log('added to local storage');
+}
+
+removeFromLocalStorage = (id) => {
+
+}
 
 // display appropriate alert
 displayAlert = (text, action) => { // action corresponding to css class
@@ -37,7 +46,7 @@ setBackToDefault = () => {
 
 // clear all items
 clearItems = () => {
-  const todoItems = todoList.querySelectorAll(".todo-item");
+  const todoItems = document.querySelectorAll(".todo-item");
 
   if (todoItems.length > 0) {
     todoItems.forEach((item) => {
@@ -51,8 +60,16 @@ clearItems = () => {
 }
 
 // delete item
-deleteItem = () => {
-  console.log("item deleted");
+deleteItem = (event) => {
+  const item = event.currentTarget.parentElement.parentElement;
+  const id = item.dataset.id;
+  todoList.removeChild(item);
+  if (todoList.children.length === 1) { // some bug, should be 0
+    todoContainer.classList.remove("show-container");
+  }
+  displayAlert("item removed", "danger");
+  setBackToDefault();
+  // removeFromLocalStorage(id);
 }
 
 // edit item
@@ -60,10 +77,6 @@ editItem = () => {
   console.log("edit item");
 }
 
-// ****** LOCAL STORAGE FUNCTIONS **********
-addToLocalStorage = (id, item) => {
-  console.log('added to local storage');
-}
 
 
 // ****** APP FUNCTIONALITY **********
@@ -87,7 +100,7 @@ addItem = (event) => {
                   <button type="button" class="delete-btn">
                   <i class="fas fa-trash"></i></button>
                 </div>`;
-                
+
     const deleteBtn = newTodoItem.querySelector(".delete-btn");
     const editBtn = newTodoItem.querySelector(".edit-btn");
 
@@ -113,6 +126,7 @@ addItem = (event) => {
   } else {
     displayAlert("please enter value", "danger");
   }
+
 };
 
 // ****** EVENT LISTENERS **********
