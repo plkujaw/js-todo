@@ -18,7 +18,13 @@ let editId = "";
 
 // ****** LOCAL STORAGE FUNCTIONS **********
 addToLocalStorage = (id, newItem) => {
-  console.log('added to local storage');
+  const todoItem = { id: id, todo: newItem};
+
+  // checking if todoList exists in local storage; if yes, get it from local storage, if not, create an empty array
+  let todoList = localStorage.getItem("todoList") ? JSON.parse(localStorage.getItem("todoList")) : [];
+  console.log(todoList);
+  todoList.push(todoItem);
+  localStorage.setItem("todoList", JSON.stringify(todoList));
 }
 
 removeFromLocalStorage = (id) => {
